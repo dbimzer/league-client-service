@@ -2,7 +2,8 @@ package com.example.client_service.controller;
 
 import com.example.client_service.entity.Client;
 import com.example.client_service.service.ClientService;
-import lombok.AllArgsConstructor;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/clients")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ClientController {
     private final ClientService clientService;
 
@@ -21,7 +22,7 @@ public class ClientController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Client createClient(@RequestBody Client client) {
+    public Client createClient(@RequestBody @Valid Client client) {
         return clientService.createClient(client);
     }
 
@@ -31,7 +32,7 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
-    public Client updateClient(@PathVariable Long id, @RequestBody Client updatedClient) {
+    public Client updateClient(@PathVariable Long id, @RequestBody @Valid Client updatedClient) {
         return clientService.updateClient(id, updatedClient);
     }
 

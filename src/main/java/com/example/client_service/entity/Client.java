@@ -3,6 +3,8 @@ package com.example.client_service.entity;
 import com.example.client_service.enums.ClientGender;
 import com.example.client_service.enums.ClientStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +22,9 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "full_name", nullable = false)
+    @Column(name = "full_name")
+    @NotNull
+    @Size(max = 20)
     private String fullName;
 
     @Enumerated(EnumType.STRING)

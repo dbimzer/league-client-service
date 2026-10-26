@@ -3,7 +3,7 @@ package com.example.client_service.service;
 import com.example.client_service.entity.Client;
 import com.example.client_service.enums.ClientStatus;
 import com.example.client_service.repository.ClientRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ClientService {
 
     private final ClientRepository clientRepository;
@@ -23,10 +23,6 @@ public class ClientService {
 
     public Client createClient(Client client) {
         client.setId(null);
-
-        if (client.getFullName() == null || client.getFullName().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Client full_name is required");
-        }
 
         if (client.getStatus() == null) {
             client.setStatus(ClientStatus.ACTIVE);
@@ -49,10 +45,6 @@ public class ClientService {
     public Client updateClient(Long id, Client updatedClient) {
 
         Client client = getClientById(id);
-
-        if (updatedClient.getFullName() == null || updatedClient.getFullName().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Client full_name is required");
-        }
 
         if (updatedClient.getStatus() != null) {
             client.setStatus(updatedClient.getStatus());
